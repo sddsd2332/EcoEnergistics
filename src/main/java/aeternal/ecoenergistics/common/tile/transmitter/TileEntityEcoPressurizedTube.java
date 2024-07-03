@@ -37,6 +37,8 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
 
     public GasStack lastWrite;
 
+    private int nextTransfer = 0;
+
     //Read only handler for support with TOP and getting network data instead of this tube's data
     private IGasHandler nullHandler = new IGasHandler() {
         @Override
@@ -81,15 +83,24 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
     public void doRestrictedTick() {
         if (!getWorld().isRemote) {
             updateShare();
-            IGasHandler[] connectedAcceptors = GasUtils.getConnectedAcceptors(getPos(), getWorld());
-            for (EnumFacing side : getConnections(ConnectionType.PULL)) {
-                IGasHandler container = connectedAcceptors[side.ordinal()];
-                if (container != null) {
-                    GasStack received = container.drawGas(side.getOpposite(), getAvailablePull(), false);
-                    if (received != null && received.amount != 0 && takeGas(received, false) == received.amount) {
-                        container.drawGas(side.getOpposite(), takeGas(received, true), true);
+            if (nextTransfer <= 0) {
+                IGasHandler[] connectedAcceptors = GasUtils.getConnectedAcceptors(getPos(), getWorld());
+                boolean successAtLeaseOnce = false;
+                for (EnumFacing side : getConnections(ConnectionType.PULL)) {
+                    IGasHandler container = connectedAcceptors[side.ordinal()];
+                    if (container != null) {
+                        GasStack received = container.drawGas(side.getOpposite(), getAvailablePull(), false);
+                        if (received != null && received.amount != 0 && takeGas(received, false) == received.amount) {
+                            container.drawGas(side.getOpposite(), takeGas(received, true), true);
+                            successAtLeaseOnce = true;
+                        }
                     }
                 }
+                if (!successAtLeaseOnce) {
+                    nextTransfer = 20;
+                }
+            } else {
+                nextTransfer--;
             }
         } else {
             float targetScale = getTransmitter().hasTransmitterNetwork() ? getTransmitter().getTransmitterNetwork().gasScale : (float) buffer.getStored() / (float) buffer.getMaxGas();
@@ -97,7 +108,7 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
                 currentScale = (9 * currentScale + targetScale) / 10;
             }
         }
-        super.update();
+        super.doRestrictedTick();
     }
 
     public int getAvailablePull() {
@@ -113,8 +124,7 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
             GasStack last = getSaveShare();
             if ((last != null && !(lastWrite != null && lastWrite.amount == last.amount && lastWrite.getGas() == last.getGas())) || (last == null && lastWrite != null)) {
                 lastWrite = last;
-                //markDirty();
-                this.world.markChunkDirty(this.pos, this);
+                markChunkDirty();
             }
         }
     }
@@ -161,7 +171,7 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
 
     @Override
     public void writeCustomNBT(NBTTagCompound nbtTags) {
-        super.writeToNBT(nbtTags);
+        super.writeCustomNBT(nbtTags);
         if (lastWrite != null && lastWrite.amount > 0) {
             nbtTags.setTag("cacheGas", lastWrite.write(new NBTTagCompound()));
         } else {

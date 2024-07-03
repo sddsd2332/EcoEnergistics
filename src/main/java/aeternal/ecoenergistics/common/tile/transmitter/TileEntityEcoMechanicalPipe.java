@@ -5,17 +5,12 @@ import aeternal.ecoenergistics.common.tier.EcoPipeTier;
 import aeternal.ecoenergistics.common.tier.MEEAlloyTier;
 import aeternal.ecoenergistics.common.tier.MEETiers;
 import io.netty.buffer.ByteBuf;
-import java.util.Collection;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import mekanism.api.TileNetworkList;
 import mekanism.api.transmitters.TransmissionType;
 import mekanism.common.base.FluidHandlerWrapper;
 import mekanism.common.base.IFluidHandlerWrapper;
-
 import mekanism.common.capabilities.CapabilityWrapperManager;
-
-import mekanism.common.tile.transmitter.TileEntitySidedPipe.*;
+import mekanism.common.tile.transmitter.TileEntitySidedPipe.ConnectionType;
 import mekanism.common.transmitters.grid.FluidNetwork;
 import mekanism.common.util.CapabilityUtils;
 import mekanism.common.util.PipeUtils;
@@ -30,6 +25,10 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collection;
+
 public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluidHandler, FluidNetwork, FluidStack> implements IFluidHandlerWrapper {
 
     public EcoPipeTier tier = EcoPipeTier.ADVANCED;
@@ -40,6 +39,8 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
 
     public FluidStack lastWrite;
     public CapabilityWrapperManager<IFluidHandlerWrapper, FluidHandlerWrapper> manager = new CapabilityWrapperManager<>(IFluidHandlerWrapper.class, FluidHandlerWrapper.class);
+
+    private int nextTransfer = 0;
 
     @Override
     public MEETiers getBaseTier() {
@@ -56,18 +57,27 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
     public void doRestrictedTick() {
         if (!getWorld().isRemote) {
             updateShare();
-            IFluidHandler[] connectedAcceptors = PipeUtils.getConnectedAcceptors(getPos(), getWorld());
-            for (EnumFacing side : getConnections(ConnectionType.PULL)) {
-                IFluidHandler container = connectedAcceptors[side.ordinal()];
-                if (container != null) {
-                    FluidStack received = container.drain(getAvailablePull(), false);
-                    if (received != null && received.amount != 0 && takeFluid(received, false) == received.amount) {
-                        container.drain(takeFluid(received, true), true);
+            if (nextTransfer <= 0) {
+                IFluidHandler[] connectedAcceptors = PipeUtils.getConnectedAcceptors(getPos(), getWorld());
+                boolean successAtLeaseOnce = false;
+                for (EnumFacing side : getConnections(ConnectionType.PULL)) {
+                    IFluidHandler container = connectedAcceptors[side.ordinal()];
+                    if (container != null) {
+                        FluidStack received = container.drain(getAvailablePull(), false);
+                        if (received != null && received.amount != 0 && takeFluid(received, false) == received.amount) {
+                            container.drain(takeFluid(received, true), true);
+                            successAtLeaseOnce = true;
+                        }
                     }
                 }
+                if (!successAtLeaseOnce) {
+                    nextTransfer = 20;
+                }
+            } else {
+                nextTransfer--;
             }
         }
-        super.update();
+        super.doRestrictedTick();
     }
 
     @Override
@@ -76,8 +86,7 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
             FluidStack last = getSaveShare();
             if ((last != null && !(lastWrite != null && lastWrite.amount == last.amount && lastWrite.getFluid() == last.getFluid())) || (last == null && lastWrite != null)) {
                 lastWrite = last;
-                //markDirty();
-                this.world.markChunkDirty(this.pos, this);
+                markChunkDirty();
             }
         }
     }
@@ -122,7 +131,7 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
         }
     }
 
-    @Nonnull
+
     @Override
     public void writeCustomNBT(NBTTagCompound nbtTags) {
         super.writeCustomNBT(nbtTags);

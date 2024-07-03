@@ -50,7 +50,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick implements ITileNetwork, IBlockableConnection, IConfigurable, ITransmitter, ITickable {
+public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick implements ITileNetwork, IBlockableConnection, IConfigurable, ITransmitter {
 
     public int delayTicks;
 
@@ -263,6 +263,9 @@ public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick im
         if (!CapabilityUtils.hasCapability(tile, Capabilities.BLOCKABLE_CONNECTION_CAPABILITY, side.getOpposite())) {
             return true;
         }
+        if (Capabilities.BLOCKABLE_CONNECTION_CAPABILITY == null) {
+            return false;
+        }
         return CapabilityUtils.getCapability(tile, Capabilities.BLOCKABLE_CONNECTION_CAPABILITY, side.getOpposite()).canConnect(side.getOpposite());
     }
 
@@ -298,7 +301,7 @@ public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick im
             for (int i = 0; i < 6; i++) {
                 connectionTypes[i] = ConnectionType.values()[dataStream.readInt()];
             }
-            markDirty();
+            markForUpdateSync();
             MekanismUtils.updateBlock(world, pos);
         }
     }
@@ -444,7 +447,7 @@ public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick im
         if (getPossibleTransmitterConnections() != currentTransmitterConnections) {
             markDirtyTransmitters();
         }
-        markDirty();
+        markForUpdateSync();
     }
 
     protected void markDirtyTransmitters() {

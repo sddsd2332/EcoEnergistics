@@ -169,9 +169,8 @@ public abstract class TileEntityEcoTransmitter<A, N extends DynamicNetwork<A, N,
 
     private boolean recheckConnectionPrechecked(EnumFacing side) {
         final TileEntity tileEntity = MekanismUtils.getTileEntity(world, getPos().offset(side));
-        if (tileEntity instanceof TileEntityEcoTransmitter) {
+        if (tileEntity instanceof TileEntityEcoTransmitter other) {
             N network = getTransmitter().getTransmitterNetwork();
-            TileEntityEcoTransmitter other = (TileEntityEcoTransmitter) tileEntity;
             //The other one should always have the same incompatible networks state as us
             // But just in case it doesn't just check the boolean
             if (other.canHaveIncompatibleNetworks() && other.getTransmitter().hasTransmitterNetwork()) {
