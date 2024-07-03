@@ -53,7 +53,7 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
     }
 
     @Override
-    public void update() {
+    public void doRestrictedTick() {
         if (!getWorld().isRemote) {
             updateShare();
             IFluidHandler[] connectedAcceptors = PipeUtils.getConnectedAcceptors(getPos(), getWorld());
@@ -109,8 +109,8 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTags) {
-        super.readFromNBT(nbtTags);
+    public void readCustomNBT(NBTTagCompound nbtTags) {
+        super.readCustomNBT(nbtTags);
         if (nbtTags.hasKey("tier")) {
             tier = EcoPipeTier.values()[nbtTags.getInteger("tier")];
         }
@@ -124,15 +124,14 @@ public class TileEntityEcoMechanicalPipe extends TileEntityEcoTransmitter<IFluid
 
     @Nonnull
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTags) {
-        super.writeToNBT(nbtTags);
+    public void writeCustomNBT(NBTTagCompound nbtTags) {
+        super.writeCustomNBT(nbtTags);
         if (lastWrite != null && lastWrite.amount > 0) {
             nbtTags.setTag("cacheFluid", lastWrite.writeToNBT(new NBTTagCompound()));
         } else {
             nbtTags.removeTag("cacheFluid");
         }
         nbtTags.setInteger("tier", tier.ordinal());
-        return nbtTags;
     }
 
     @Override

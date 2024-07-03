@@ -78,7 +78,7 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
     }
 
     @Override
-    public void update() {
+    public void doRestrictedTick() {
         if (!getWorld().isRemote) {
             updateShare();
             IGasHandler[] connectedAcceptors = GasUtils.getConnectedAcceptors(getPos(), getWorld());
@@ -145,8 +145,8 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTags) {
-        super.readFromNBT(nbtTags);
+    public void readCustomNBT(NBTTagCompound nbtTags) {
+        super.readCustomNBT(nbtTags);
         if (nbtTags.hasKey("tier")) {
             tier = EcoTubeTier.values()[nbtTags.getInteger("tier")];
         }
@@ -158,9 +158,9 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
         }
     }
 
-    @Nonnull
+
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTags) {
+    public void writeCustomNBT(NBTTagCompound nbtTags) {
         super.writeToNBT(nbtTags);
         if (lastWrite != null && lastWrite.amount > 0) {
             nbtTags.setTag("cacheGas", lastWrite.write(new NBTTagCompound()));
@@ -168,7 +168,6 @@ public class TileEntityEcoPressurizedTube extends TileEntityEcoTransmitter<IGasH
             nbtTags.removeTag("cacheGas");
         }
         nbtTags.setInteger("tier", tier.ordinal());
-        return nbtTags;
     }
 
     @Override

@@ -4,10 +4,10 @@ import io.netty.buffer.ByteBuf;
 import mekanism.api.TileNetworkList;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.MekanismUtils;
+import mekanism.common.util.NonNullListSynchronized;
 import micdoodle8.mods.galacticraft.api.world.ISolarLevel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -25,7 +25,7 @@ public abstract class TileEntityEcoSolarPanel extends TileEntityEcoGenerator {
 
     public TileEntityEcoSolarPanel(String name, double maxEnergy, double output) {
         super("solar", name, maxEnergy, output);
-        inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+        inventory = NonNullListSynchronized.withSize(1, ItemStack.EMPTY);
     }
 
     public boolean canSeeSun() {

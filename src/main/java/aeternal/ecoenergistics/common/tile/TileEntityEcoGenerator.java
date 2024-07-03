@@ -104,17 +104,16 @@ public abstract class TileEntityEcoGenerator extends TileEntityEffectsBlock impl
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTags) {
-        super.readFromNBT(nbtTags);
+    public void readCustomNBT(NBTTagCompound nbtTags) {
+        super.readCustomNBT(nbtTags);
         controlType = RedstoneControl.values()[nbtTags.getInteger("controlType")];
     }
 
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTags) {
-        super.writeToNBT(nbtTags);
+    public void writeCustomNBT(NBTTagCompound nbtTags) {
+        super.writeCustomNBT(nbtTags);
         nbtTags.setInteger("controlType", controlType.ordinal());
-        return nbtTags;
     }
 
     @Nonnull

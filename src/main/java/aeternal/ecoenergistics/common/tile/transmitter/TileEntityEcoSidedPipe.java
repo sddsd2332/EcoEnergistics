@@ -19,6 +19,7 @@ import mekanism.common.block.property.PropertyConnection;
 import mekanism.common.capabilities.Capabilities;
 import mekanism.common.integration.multipart.MultipartMekanism;
 import mekanism.common.integration.multipart.MultipartTileNetworkJoiner;
+import mekanism.common.tile.base.TileEntityRestrictedTick;
 import mekanism.common.tile.transmitter.TileEntitySidedPipe.ConnectionType;
 import mekanism.common.util.CapabilityUtils;
 import mekanism.common.util.MekanismUtils;
@@ -49,7 +50,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-public abstract class TileEntityEcoSidedPipe extends TileEntity implements ITileNetwork, IBlockableConnection, IConfigurable, ITransmitter, ITickable {
+public abstract class TileEntityEcoSidedPipe extends TileEntityRestrictedTick implements ITileNetwork, IBlockableConnection, IConfigurable, ITransmitter, ITickable {
 
     public int delayTicks;
 
@@ -88,7 +89,7 @@ public abstract class TileEntityEcoSidedPipe extends TileEntity implements ITile
     }
 
     @Override
-    public void update() {
+    public void doRestrictedTick() {
         if (getWorld().isRemote) {
             if (delayTicks == 5) {
                 delayTicks = 6; /* don't refresh again */
@@ -316,23 +317,22 @@ public abstract class TileEntityEcoSidedPipe extends TileEntity implements ITile
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTags) {
-        super.readFromNBT(nbtTags);
+    public void readCustomNBT(NBTTagCompound nbtTags) {
+        super.readCustomNBT(nbtTags);
         redstoneReactive = nbtTags.getBoolean("redstoneReactive");
         for (int i = 0; i < 6; i++) {
             connectionTypes[i] = ConnectionType.values()[nbtTags.getInteger("connection" + i)];
         }
     }
 
-    @Nonnull
+
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTags) {
-        super.writeToNBT(nbtTags);
+    public void writeCustomNBT(NBTTagCompound nbtTags) {
+        super.writeCustomNBT(nbtTags);
         nbtTags.setBoolean("redstoneReactive", redstoneReactive);
         for (int i = 0; i < 6; i++) {
             nbtTags.setInteger("connection" + i, connectionTypes[i].ordinal());
         }
-        return nbtTags;
     }
 
     @Nonnull

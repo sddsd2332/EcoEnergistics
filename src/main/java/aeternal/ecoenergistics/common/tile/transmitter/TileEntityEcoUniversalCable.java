@@ -69,7 +69,7 @@ public class TileEntityEcoUniversalCable extends TileEntityEcoTransmitter<Energy
     }
 
     @Override
-    public void update() {
+    public void doRestrictedTick() {
         if (getWorld().isRemote) {
             double targetPower = getTransmitter().hasTransmitterNetwork() ? getTransmitter().getTransmitterNetwork().clientEnergyScale : 0;
             if (Math.abs(currentPower - targetPower) > 0.01) {
@@ -153,8 +153,8 @@ public class TileEntityEcoUniversalCable extends TileEntityEcoTransmitter<Energy
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbtTags) {
-        super.readFromNBT(nbtTags);
+    public void readCustomNBT(NBTTagCompound nbtTags) {
+        super.readCustomNBT(nbtTags);
         buffer.amount = nbtTags.getDouble("cacheEnergy");
         if (buffer.amount < 0) {
             buffer.amount = 0;
@@ -164,13 +164,12 @@ public class TileEntityEcoUniversalCable extends TileEntityEcoTransmitter<Energy
         }
     }
 
-    @Nonnull
+
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbtTags) {
-        super.writeToNBT(nbtTags);
+    public void writeCustomNBT(NBTTagCompound nbtTags) {
+        super.writeCustomNBT(nbtTags);
         nbtTags.setDouble("cacheEnergy", lastWrite);
         nbtTags.setInteger("tier", tier.ordinal());
-        return nbtTags;
     }
 
     @Override
