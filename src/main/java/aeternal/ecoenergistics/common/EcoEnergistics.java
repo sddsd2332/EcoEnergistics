@@ -46,6 +46,7 @@ import static aeternal.ecoenergistics.common.EcoEnergisticsBlocks.EcoOreBlock;
 import static aeternal.ecoenergistics.common.EcoEnergisticsItems.Dust;
 import static aeternal.ecoenergistics.common.Infusers.registerInfuseObject;
 import static aeternal.ecoenergistics.common.Infusers.registerInfuseType;
+import static aeternal.ecoenergistics.common.recipes.Compressor.InitCustomCompressorRecipes;
 import static aeternal.ecoenergistics.common.recipes.Crusher.InitCustomCrusherRecipes;
 import static aeternal.ecoenergistics.common.recipes.Enrichment.InitCustomEnrichmentRecipes;
 import static aeternal.ecoenergistics.common.recipes.Infuser.InitCustomInfuserRecipes;
@@ -94,6 +95,7 @@ public class EcoEnergistics implements IModule {
         InitCustomEnrichmentRecipes();
         InitCustomPurificationRecipes();
         InitCustomCrusherRecipes();
+        InitCustomCompressorRecipes();
         InitCustomInjectionRecipes();
         InitSmeltingRecipes();
         registerInfuseObject();
