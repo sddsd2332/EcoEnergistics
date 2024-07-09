@@ -3,21 +3,15 @@ package aeternal.ecoenergistics.common;
 import aeternal.ecoenergistics.common.config.EcoConfig;
 import aeternal.ecoenergistics.common.enums.AvaritiaTiers;
 import aeternal.ecoenergistics.common.enums.Compressed;
-import aeternal.ecoenergistics.common.enums.Dust;
 import aeternal.ecoenergistics.common.enums.MoreDust;
-
 import mekanism.api.infuse.InfuseObject;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.api.infuse.InfuseType;
-import mekanism.common.MekanismItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
-import java.util.List;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class Infusers {
 
@@ -42,7 +36,7 @@ public class Infusers {
     public static List<ItemStack> uraniumDusts = OreDictionary.getOres("dustUranium");
     public static List<ItemStack> iridiumDusts = OreDictionary.getOres("dustIridium");
     public static List<ItemStack> CrystalMatrixDusts = OreDictionary.getOres("dustCrystalMatrix");
-    public static List<ItemStack> NeutroniumDusts = OreDictionary.getOres("dustCosmicNeutronium");
+    public static List<ItemStack> NeutroniumDusts = OreDictionary.getOres("dustNeutronium");
     public static List<ItemStack> InfinityDusts = OreDictionary.getOres("dustInfinity");
 
 
@@ -64,7 +58,7 @@ public class Infusers {
         iridium = new InfuseType("IRIDIUM", new ResourceLocation(EcoEnergistics.MOD_ID, "blocks/infuse/InfuseIridium")).setTranslationKey("iridium");
         InfuseRegistry.registerInfuseType(iridium);
 
-        if (EcoEnergistics.hooks.AvaritiaLoaded && EcoConfig.current().integration.AvaritiaEnable.val()){
+        if (EcoEnergistics.hooks.AvaritiaLoaded && EcoConfig.current().integration.AvaritiaEnable.val()) {
             crystal = new InfuseType("CRYSTAL", new ResourceLocation(EcoEnergistics.MOD_ID, "blocks/infuse/InfuseCrystal")).setTranslationKey("crystal");
             InfuseRegistry.registerInfuseType(crystal);
             neutronium = new InfuseType("NEUTRONIUM", new ResourceLocation(EcoEnergistics.MOD_ID, "blocks/infuse/InfuseNeutronium")).setTranslationKey("neutronium");
@@ -131,7 +125,7 @@ public class Infusers {
         }
 
 
-        if (EcoEnergistics.hooks.AvaritiaLoaded && EcoConfig.current().integration.AvaritiaEnable.val()){
+        if (EcoEnergistics.hooks.AvaritiaLoaded && EcoConfig.current().integration.AvaritiaEnable.val()) {
             InfuseType crystal = InfuseRegistry.get("CRYSTAL");
             InfuseType neutronium = InfuseRegistry.get("NEUTRONIUM");
             InfuseType infinity = InfuseRegistry.get("INFINITY");

@@ -90,7 +90,7 @@ public class EcoEnergisticsOreDict {
             OreDictionary.registerOre("circuitNeutronium", new ItemStack(EcoEnergisticsItems.ControlCircuitAvaritia, 1, 1));
             OreDictionary.registerOre("circuitInfinity", new ItemStack(EcoEnergisticsItems.ControlCircuitAvaritia, 1, 2));
 
-            OreDictionary.registerOre("dustCrystal", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 0));
+            OreDictionary.registerOre("dustCrystalMatrix", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 0));
             OreDictionary.registerOre("dustNeutronium", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 1));
             OreDictionary.registerOre("dustInfinity", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 2));
 
