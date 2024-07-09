@@ -94,11 +94,11 @@ public class EcoEnergistics implements IModule {
         InitCustomInfuserRecipes();
         InitCustomEnrichmentRecipes();
         InitCustomPurificationRecipes();
-        InitCustomCrusherRecipes();
         InitCustomCompressorRecipes();
         InitCustomInjectionRecipes();
         InitSmeltingRecipes();
         registerInfuseObject();
+        InitCustomCrusherRecipes();
     }
 
     public static void InitSmeltingRecipes() {
@@ -121,7 +121,6 @@ public class EcoEnergistics implements IModule {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
         configuration = new Configuration(new File("config/EcoEnergistics/EcoEnergistics.cfg"));
         configurationIntegration = new Configuration(new File("config/EcoEnergistics/EcoEnergisticsIntegration.cfg"));
         proxy.preInit();

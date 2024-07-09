@@ -45,6 +45,7 @@ public class Infusers {
     public static List<ItemStack> NeutroniumDusts = OreDictionary.getOres("dustCosmicNeutronium");
     public static List<ItemStack> InfinityDusts = OreDictionary.getOres("dustInfinity");
 
+
     public static void registerInfuseType() {
         gold = new InfuseType("GOLD", new ResourceLocation(EcoEnergistics.MOD_ID, "blocks/infuse/InfuseGold")).setTranslationKey("gold");
         InfuseRegistry.registerInfuseType(gold);
@@ -82,7 +83,7 @@ public class Infusers {
         InfuseType titanium = InfuseRegistry.get("TITANIUM");
         InfuseType uranium = InfuseRegistry.get("URANIUM");
         InfuseType iridium = InfuseRegistry.get("IRIDIUM");
-        if (gold != null) {
+        if (gold != null && !goldDusts.isEmpty()) {
             ItemStack goldDust = goldDusts.get(0).copy();
             ItemStack goldCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.GOLD.ordinal());
             InfuseRegistry.registerInfuseObject(goldDust, new InfuseObject(gold, 10));
@@ -94,35 +95,35 @@ public class Infusers {
             InfuseRegistry.registerInfuseObject(activeGlowstoneIngot, new InfuseObject(glowstone, 10));
             InfuseRegistry.registerInfuseObject(activeGlowstoneCompressed, new InfuseObject(glowstone, 80));
         }
-        if (steel != null) {
+        if (steel != null && !steelDusts.isEmpty()) {
             ItemStack steelDust = steelDusts.get(0).copy();
             InfuseRegistry.registerInfuseObject(steelDust, new InfuseObject(steel, 10));
         }
-        if (lapis != null) {
+        if (lapis != null && !lapisDusts.isEmpty()) {
             ItemStack lapisDust = lapisDusts.get(0).copy();
             ItemStack lapisCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.LAPIS.ordinal());
             InfuseRegistry.registerInfuseObject(lapisDust, new InfuseObject(lapis, 10));
             InfuseRegistry.registerInfuseObject(lapisCompressed, new InfuseObject(lapis, 80));
         }
-        if (emerald != null) {
+        if (emerald != null && !emeraldDusts.isEmpty()) {
             ItemStack emeraldDust = emeraldDusts.get(0).copy();
             ItemStack emeraldCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.EMERALD.ordinal());
             InfuseRegistry.registerInfuseObject(emeraldDust, new InfuseObject(emerald, 10));
             InfuseRegistry.registerInfuseObject(emeraldCompressed, new InfuseObject(emerald, 80));
         }
-        if (titanium!= null) {
+        if (titanium != null && !titaniumDusts.isEmpty()) {
             ItemStack titaniumDust = titaniumDusts.get(0).copy();
             ItemStack titaniumCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.TITANIUM.ordinal());
             InfuseRegistry.registerInfuseObject(titaniumDust, new InfuseObject(titanium, 10));
             InfuseRegistry.registerInfuseObject(titaniumCompressed, new InfuseObject(titanium, 80));
         }
-        if (uranium!= null) {
+        if (uranium != null && !uraniumDusts.isEmpty()) {
             ItemStack uraniumDust = uraniumDusts.get(0).copy();
             ItemStack uraniumCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.URANIUM.ordinal());
             InfuseRegistry.registerInfuseObject(uraniumDust, new InfuseObject(uranium, 10));
             InfuseRegistry.registerInfuseObject(uraniumCompressed, new InfuseObject(uranium, 80));
         }
-        if (iridium!= null) {
+        if (iridium != null && !iridiumDusts.isEmpty()) {
             ItemStack iridiumDust = iridiumDusts.get(0).copy();
             ItemStack iridiumCompressed = new ItemStack(EcoEnergisticsItems.MoreCompressed, 1, Compressed.IRIDIUM.ordinal());
             InfuseRegistry.registerInfuseObject(iridiumDust, new InfuseObject(iridium, 10));
@@ -135,19 +136,19 @@ public class Infusers {
             InfuseType neutronium = InfuseRegistry.get("NEUTRONIUM");
             InfuseType infinity = InfuseRegistry.get("INFINITY");
 
-            if (crystal != null) {
+            if (crystal != null && !CrystalMatrixDusts.isEmpty()) {
                 ItemStack crystalDust = CrystalMatrixDusts.get(0).copy();
                 ItemStack crystalCompressed = new ItemStack(EcoEnergisticsItems.CompressedAvaritia, 1, AvaritiaTiers.CRYSTALMATRIX.ordinal());
                 InfuseRegistry.registerInfuseObject(crystalDust, new InfuseObject(crystal, 10));
                 InfuseRegistry.registerInfuseObject(crystalCompressed, new InfuseObject(crystal, 80));
             }
-            if (neutronium != null) {
+            if (neutronium != null && !NeutroniumDusts.isEmpty()) {
                 ItemStack neutroniumDust = NeutroniumDusts.get(0).copy();
                 ItemStack neutroniumCompressed = new ItemStack(EcoEnergisticsItems.CompressedAvaritia, 1, 1);
                 InfuseRegistry.registerInfuseObject(neutroniumDust, new InfuseObject(neutronium, 10));
                 InfuseRegistry.registerInfuseObject(neutroniumCompressed, new InfuseObject(neutronium, 80));
             }
-            if (infinity != null) {
+            if (infinity != null && !InfinityDusts.isEmpty()) {
                 ItemStack infinityDust = InfinityDusts.get(0).copy();
                 ItemStack infinityCompressed = new ItemStack(EcoEnergisticsItems.CompressedAvaritia, 1, 2);
                 InfuseRegistry.registerInfuseObject(infinityDust, new InfuseObject(infinity, 10));

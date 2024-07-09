@@ -81,11 +81,14 @@ Don't try to force something you want to charge into panels via pipes etc, you w
 
 Credits: Huge thanks to the Mekanism team for creating Mekanism and it's official addons
 
-Permissions:
+Permissions: 
 
-1.You are allowed to redistribute this mod, but you must credit the download source as 'CurseForge' or 'Modrinth' and include a direct link that leads to the page of this mod
+1.You are allowed to redistribute this mod as long as You:
 
-2.You can use this mod in your modpacks
+  I.Must credit the download source as 'CurseForge' or 'Modrinth' and include a direct link that leads to the page of this mod
+
+  II.Get personal permission from me in case You plan to publish Your project on CurseForge or Modrinth. Applicable only to CurseForge or Modrinth.
+
+2.You can use this mod in your modpacks 
 
 3.You are allowed to modify the source code of the mod
-
