@@ -41,7 +41,7 @@ public class Infuser {
             ItemStack lithiumDust = new ItemStack(MekanismItems.OtherDust, 1, 4);
             ItemStack refinedlithiumDust = new ItemStack(EcoEnergisticsItems.MoreDust, 1, 3);
 
-            ItemStack hdperod = new ItemStack(MekanismItems.Polyethene, 1, 1);
+            ItemStack hdperod = new ItemStack(MekanismItems.HDPE_ROD, 1, 0);
             ItemStack steelrod = new ItemStack(EcoEnergisticsItems.MoreRod, 1, 0);
 
             // Metallurgic Infuser Recipes
