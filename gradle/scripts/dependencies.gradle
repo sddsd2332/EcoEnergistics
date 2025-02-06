@@ -79,6 +79,6 @@ dependencies {
     runtimeOnly 'curse.maven:ftb-library-237167:2985811'
     runtimeOnly 'curse.maven:ftb-utilities-237102:3157548'
     runtimeOnly 'curse.maven:had-enough-characters-640802:4035773'
-    implementation rfg.deobf("Mekanism:Mekanism-CE-Unofficial-All:9.9.0.013:dev")
-
+    implementation rfg.deobf(files('libs/Mekanism-CE-Unofficial-All-9.9.1.218-dev.jar'))
+    implementation rfg.deobf(files('libs/MekanismMixinHelp-1.0.2-dev.jar'))
 }

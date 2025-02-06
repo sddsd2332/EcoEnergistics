@@ -10,11 +10,11 @@
 	"updateJSON": "${mod_update_json}",
 	"logoFile": "${mod_logo_path}",
      "dependencies": [
-     "mekanism",
-     "mekanismgenerators"
+     "mekanism@[9.9.1.218,)",
+     "mekanismgenerators@[9.9.1.218,)"
     ],
      "requiredMods": [
-     "mekanism",
-     "mekanismgenerators"
+     "mekanism@[9.9.1.218,)",
+     "mekanismgenerators@[9.9.1.218,)"
     ]
 }]
