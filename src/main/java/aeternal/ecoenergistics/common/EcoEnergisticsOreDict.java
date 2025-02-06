@@ -10,8 +10,8 @@ import static aeternal.ecoenergistics.common.EcoEnergisticsItems.Dust;
 public class EcoEnergisticsOreDict {
 
     public static void registerOreDict() {
-        OreDictionary.registerOre("dustLapis", new ItemStack(EcoEnergisticsItems.MoreDust, 1, 0));
-        OreDictionary.registerOre("dustEmerald", new ItemStack(EcoEnergisticsItems.MoreDust, 1, 1));
+        OreDictionary.registerOre("dustLapisCrushed", new ItemStack(EcoEnergisticsItems.MoreDust, 1, 0));
+        OreDictionary.registerOre("dustEmeraldCrushed", new ItemStack(EcoEnergisticsItems.MoreDust, 1, 1));
         OreDictionary.registerOre("dustEnrichedGlowstone", new ItemStack(EcoEnergisticsItems.MoreDust, 1, 2));
         OreDictionary.registerOre("dustTitanium", new ItemStack(Dust, 1, 0));
         OreDictionary.registerOre("dustUranium", new ItemStack(Dust, 1, 1));
@@ -90,7 +90,7 @@ public class EcoEnergisticsOreDict {
             OreDictionary.registerOre("circuitNeutronium", new ItemStack(EcoEnergisticsItems.ControlCircuitAvaritia, 1, 1));
             OreDictionary.registerOre("circuitInfinity", new ItemStack(EcoEnergisticsItems.ControlCircuitAvaritia, 1, 2));
 
-            OreDictionary.registerOre("dustCrystalMatrix", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 0));
+            OreDictionary.registerOre("dustCrystal", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 0));
             OreDictionary.registerOre("dustNeutronium", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 1));
             OreDictionary.registerOre("dustInfinity", new ItemStack(EcoEnergisticsItems.DustAvaritia, 1, 2));
 

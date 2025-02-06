@@ -59,8 +59,8 @@ public abstract class TileEntityEcoTransmitter<A, N extends DynamicNetwork<A, N,
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void doRestrictedTick() {
+        super.doRestrictedTick();
         if (delayedRefresh) {
             //Gets run the tick after the variable has been set. This is enough
             // time to ensure that the transmitter has been registered.
@@ -169,9 +169,8 @@ public abstract class TileEntityEcoTransmitter<A, N extends DynamicNetwork<A, N,
 
     private boolean recheckConnectionPrechecked(EnumFacing side) {
         final TileEntity tileEntity = MekanismUtils.getTileEntity(world, getPos().offset(side));
-        if (tileEntity instanceof TileEntityEcoTransmitter) {
+        if (tileEntity instanceof TileEntityEcoTransmitter other) {
             N network = getTransmitter().getTransmitterNetwork();
-            TileEntityEcoTransmitter other = (TileEntityEcoTransmitter) tileEntity;
             //The other one should always have the same incompatible networks state as us
             // But just in case it doesn't just check the boolean
             if (other.canHaveIncompatibleNetworks() && other.getTransmitter().hasTransmitterNetwork()) {
